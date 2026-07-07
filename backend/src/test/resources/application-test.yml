@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
     username: sa
-    password:
+    password: ""
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
@@ -13,3 +13,24 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
   flyway:
     enabled: false
+
+app:
+  jwt:
+    secret: test-secret-at-least-64-characters-long-for-unit-testing-purposes-only
+    access-token-expiry-minutes: 15
+    refresh-token-expiry-days: 14
+  turnstile:
+    secret: test-secret
+    verify-url: https://challenges.cloudflare.com/turnstile/v0/siteverify
+    enabled: false
+  cors:
+    allowed-origin: http://localhost:5173
+  frontend:
+    base-url: http://localhost:5173
+  seed:
+    enabled: false
+
+logging:
+  level:
+    bg.tu_sofia.carpooling: WARN
+    org.springframework.security: WARN

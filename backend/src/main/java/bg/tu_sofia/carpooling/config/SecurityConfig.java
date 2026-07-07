@@ -20,6 +20,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
+@org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 public class SecurityConfig {
 
     private final AppProperties appProperties;
@@ -75,6 +76,8 @@ public class SecurityConfig {
                         "/api/swagger-ui.html",
                         "/v3/api-docs/**"
                 ).permitAll()
+                // Ride search (also covered above, but explicit for clarity)
+                .requestMatchers(HttpMethod.GET, "/api/v1/rides/**").permitAll()
                 // Admin endpoints
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 // All other requests require authentication

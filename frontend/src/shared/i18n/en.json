@@ -54,6 +54,53 @@
     "petsAllowed": "Pets allowed",
     "soon": "Coming soon..."
   },
+  "rides": {
+    "title": "Rides",
+    "search": "Search",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "searchButton": "Search",
+    "noResults": "No rides found",
+    "pricePerSeat": "BGN/person",
+    "seats": "seats",
+    "available": "available",
+    "details": "View details",
+    "book": "Book",
+    "cancel": "Cancel ride",
+    "createTitle": "Publish a ride",
+    "myTitle": "My rides"
+  },
+  "bookings": {
+    "title": "My bookings",
+    "seats": "Seats",
+    "message": "Message",
+    "bookButton": "Book",
+    "confirm": "Confirm",
+    "reject": "Reject",
+    "cancel": "Cancel",
+    "status": {
+      "PENDING": "Pending",
+      "CONFIRMED": "Confirmed",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled",
+      "NO_SHOW": "No show",
+      "ACTIVE": "Active",
+      "COMPLETED": "Completed"
+    }
+  },
+  "cars": {
+    "title": "My cars",
+    "add": "Add car",
+    "make": "Make",
+    "model": "Model",
+    "year": "Year",
+    "color": "Color",
+    "licensePlate": "License plate",
+    "seats": "Seats",
+    "delete": "Delete",
+    "noDriver": "Add a car to publish rides"
+  },
   "common": {
     "loading": "Loading...",
     "save": "Save",
