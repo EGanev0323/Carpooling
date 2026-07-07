@@ -10,12 +10,14 @@ import bg.tu_sofia.carpooling.bookings.api.dto.BookingResponse.PassengerSummary;
 import bg.tu_sofia.carpooling.bookings.api.dto.BookingResponse.RideSummary;
 import bg.tu_sofia.carpooling.bookings.domain.Booking;
 import bg.tu_sofia.carpooling.bookings.repository.BookingRepository;
+import bg.tu_sofia.carpooling.chat.service.ChatService;
 import bg.tu_sofia.carpooling.common.exception.BusinessException;
 import bg.tu_sofia.carpooling.common.exception.ResourceNotFoundException;
 import bg.tu_sofia.carpooling.common.exception.UnauthorizedException;
 import bg.tu_sofia.carpooling.geo.domain.City;
 import bg.tu_sofia.carpooling.rides.domain.Ride;
 import bg.tu_sofia.carpooling.rides.repository.RideRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,15 +36,18 @@ public class BookingService {
     private final RideRepository rideRepository;
     private final UserRepository userRepository;
     private final AuditService auditService;
+    private final ChatService chatService;
 
     public BookingService(BookingRepository bookingRepository,
                           RideRepository rideRepository,
                           UserRepository userRepository,
-                          AuditService auditService) {
+                          AuditService auditService,
+                          @Lazy ChatService chatService) {
         this.bookingRepository = bookingRepository;
         this.rideRepository = rideRepository;
         this.userRepository = userRepository;
         this.auditService = auditService;
+        this.chatService = chatService;
     }
 
     @Transactional
@@ -119,6 +124,12 @@ public class BookingService {
 
         auditService.log(driverId, "BOOKING_CONFIRMED", "BOOKING", saved.getId(),
                 Map.of("passengerId", booking.getPassenger().getId()));
+
+        chatService.getOrCreateChannel(
+                saved.getRide().getId(),
+                saved.getRide().getDriver().getId(),
+                saved.getPassenger().getId()
+        );
 
         return toResponse(saved);
     }

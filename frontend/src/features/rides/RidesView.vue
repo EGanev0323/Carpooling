@@ -5,6 +5,7 @@ import { useToast } from 'primevue/usetoast'
 import { useCitiesStore } from '@/stores/cities'
 import { ridesApi } from '@/shared/api/rides'
 import RideCard from '@/shared/components/RideCard.vue'
+import MapView from '@/shared/components/MapView.vue'
 import type { RideResponse, City } from '@/types'
 
 const { t, locale } = useI18n()
@@ -17,6 +18,8 @@ const totalRecords = ref(0)
 const totalPages = ref(0)
 const currentPage = ref(0)
 const pageSize = 12
+
+const hoveredRide = ref<RideResponse | undefined>(undefined)
 
 const selectedOrigin = ref<City | null>(null)
 const selectedDestination = ref<City | null>(null)
@@ -51,6 +54,7 @@ async function searchRides(page = 0): Promise<void> {
     totalRecords.value = data.totalElements
     totalPages.value = data.totalPages
     currentPage.value = data.page
+    hoveredRide.value = undefined
   } catch {
     toast.add({
       severity: 'error',
@@ -171,22 +175,41 @@ onMounted(async () => {
         <p class="rides-view__count">
           {{ totalRecords }} {{ t('trips.found') }}
         </p>
-        <div class="rides-grid">
-          <RideCard
-            v-for="ride in rides"
-            :key="ride.publicId"
-            :ride="ride"
-          />
-        </div>
 
-        <Paginator
-          v-if="totalPages > 1"
-          :rows="pageSize"
-          :totalRecords="totalRecords"
-          :first="currentPage * pageSize"
-          @page="onPageChange"
-          class="rides-view__paginator"
-        />
+        <div class="rides-view__content">
+          <!-- Map — 60% on desktop -->
+          <div class="rides-view__map-col">
+            <MapView
+              :rides="rides"
+              :selected-ride="hoveredRide"
+              height="600px"
+            />
+          </div>
+
+          <!-- Cards — 40% on desktop -->
+          <div class="rides-view__cards-col">
+            <div class="rides-grid">
+              <div
+                v-for="ride in rides"
+                :key="ride.publicId"
+                class="ride-card-wrapper"
+                @mouseenter="hoveredRide = ride"
+                @mouseleave="hoveredRide = undefined"
+              >
+                <RideCard :ride="ride" />
+              </div>
+            </div>
+
+            <Paginator
+              v-if="totalPages > 1"
+              :rows="pageSize"
+              :totalRecords="totalRecords"
+              :first="currentPage * pageSize"
+              @page="onPageChange"
+              class="rides-view__paginator"
+            />
+          </div>
+        </div>
       </template>
     </template>
   </div>
@@ -254,10 +277,42 @@ onMounted(async () => {
   margin-bottom: var(--spacing-4);
 }
 
-.rides-grid {
+/* Desktop: map left 60%, cards right 40% */
+.rides-view__content {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: 3fr 2fr;
+  gap: var(--spacing-5);
+  align-items: start;
+}
+
+.rides-view__map-col {
+  position: sticky;
+  top: calc(64px + var(--spacing-4));
+}
+
+.rides-view__cards-col {
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-4);
+  min-height: 0;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  padding-right: var(--spacing-1);
+}
+
+.rides-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.ride-card-wrapper {
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.ride-card-wrapper:hover {
+  transform: translateX(-2px);
 }
 
 .rides-view__skeletons {
@@ -292,6 +347,22 @@ onMounted(async () => {
 }
 
 .rides-view__paginator {
-  margin-top: var(--spacing-6);
+  margin-top: var(--spacing-4);
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 900px) {
+  .rides-view__content {
+    grid-template-columns: 1fr;
+  }
+
+  .rides-view__map-col {
+    position: static;
+  }
+
+  .rides-view__cards-col {
+    max-height: none;
+    overflow-y: visible;
+  }
 }
 </style>

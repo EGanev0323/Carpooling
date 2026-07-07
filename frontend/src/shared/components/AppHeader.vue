@@ -4,11 +4,17 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
+import { useChatStore } from '@/stores/chat'
 
 const router = useRouter()
 const { t } = useI18n()
 const authStore = useAuthStore()
 const uiStore = useUiStore()
+const chatStore = useChatStore()
+
+const totalUnread = computed(() =>
+  chatStore.channels.reduce((sum, ch) => sum + ch.unreadCount, 0)
+)
 
 const mobileMenuOpen = ref(false)
 const userMenuRef = ref<{ toggle: (event: Event) => void } | null>(null)
@@ -84,6 +90,17 @@ function toggleMobile() {
         />
 
         <template v-if="authStore.isLoggedIn">
+          <!-- Chat icon with unread badge -->
+          <RouterLink to="/chat" class="chat-nav-btn" :aria-label="t('chat.title')">
+            <i class="pi pi-comments" style="font-size: 1.1rem" />
+            <Badge
+              v-if="totalUnread > 0"
+              :value="totalUnread"
+              severity="danger"
+              class="chat-nav-badge"
+            />
+          </RouterLink>
+
           <Button
             text
             class="user-menu-btn"

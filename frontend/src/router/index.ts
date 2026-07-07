@@ -85,6 +85,18 @@ const router = createRouter({
       meta: { requiresAuth: true, requiresDriver: true }
     },
     {
+      path: '/chat',
+      name: 'Chat',
+      component: () => import('@/features/chat/ChatView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/chat/:channelId',
+      name: 'ChatChannel',
+      component: () => import('@/features/chat/ChatView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/:pathMatch(.*)*',
       redirect: '/'
     }

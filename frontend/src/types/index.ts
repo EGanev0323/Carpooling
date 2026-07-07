@@ -121,3 +121,30 @@ export interface CreateBookingData {
   seats: number
   message?: string
 }
+
+export interface ChatParticipant {
+  id: number
+  firstName: string
+  lastName: string
+  avatarUrl: string | null
+}
+
+export interface ChatChannel {
+  id: number
+  ridePublicId: string
+  originCity: string
+  destinationCity: string
+  driver: ChatParticipant
+  passenger: ChatParticipant
+  createdAt: string
+  unreadCount: number
+}
+
+export interface ChatMessage {
+  id: number
+  channelId: number
+  sender: ChatParticipant
+  content: string
+  createdAt: string
+  readAt: string | null
+}

@@ -6,6 +6,7 @@ import { useToast } from 'primevue/usetoast'
 import { ridesApi } from '@/shared/api/rides'
 import { bookingsApi } from '@/shared/api/bookings'
 import { useAuthStore } from '@/stores/auth'
+import MapView from '@/shared/components/MapView.vue'
 import type { RideResponse, BookingResponse } from '@/types'
 
 const route = useRoute()
@@ -160,6 +161,15 @@ onMounted(loadRide)
           v-if="ride.status !== 'ACTIVE'"
           :value="t(`bookings.status.${ride.status}`)"
           :severity="statusSeverity"
+        />
+      </div>
+
+      <!-- Map for current ride -->
+      <div class="trip-detail__map">
+        <MapView
+          :rides="[ride]"
+          :selected-ride="ride"
+          height="380px"
         />
       </div>
 
@@ -365,6 +375,12 @@ onMounted(loadRide)
 <style scoped>
 .trip-detail {
   padding: var(--spacing-4) 0;
+}
+
+.trip-detail__map {
+  margin-bottom: var(--spacing-5);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .trip-detail__loading {

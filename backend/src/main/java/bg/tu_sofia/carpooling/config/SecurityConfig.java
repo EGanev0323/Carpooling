@@ -78,6 +78,8 @@ public class SecurityConfig {
                 ).permitAll()
                 // Ride search (also covered above, but explicit for clarity)
                 .requestMatchers(HttpMethod.GET, "/api/v1/rides/**").permitAll()
+                // WebSocket endpoint — handshake security handled by JwtHandshakeInterceptor
+                .requestMatchers("/ws/**").permitAll()
                 // Admin endpoints
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 // All other requests require authentication
