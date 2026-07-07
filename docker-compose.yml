@@ -1,20 +1,89 @@
 services:
-  db:
-    image: postgres:16
-    container_name: carpooling-db
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: carpooling-postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: carpooling
-    ports:
-      - "5432:5432"
+      POSTGRES_DB: ${POSTGRES_DB:-carpooling}
+      POSTGRES_USER: ${POSTGRES_USER:-carpooling}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
     volumes:
-      - carpooling_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d carpooling"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-carpooling} -d ${POSTGRES_DB:-carpooling}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - internal
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: carpooling-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-carpooling}
+      DB_USER: ${POSTGRES_USER:-carpooling}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      JWT_SECRET: ${JWT_SECRET:-change-this-secret-for-production-use-only}
+      TURNSTILE_SECRET: ${TURNSTILE_SECRET:-1x0000000000000000000000000000000AA}
+      TURNSTILE_ENABLED: ${TURNSTILE_ENABLED:-false}
+      CORS_ALLOWED_ORIGIN: ${CORS_ALLOWED_ORIGIN:-http://localhost}
+      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL:-http://localhost}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SEED_ENABLED: ${SEED_ENABLED:-true}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+    networks:
+      - internal
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v1
+    container_name: carpooling-frontend
+    restart: unless-stopped
+    networks:
+      - internal
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: carpooling-nginx
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    networks:
+      - internal
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
 
 volumes:
-  carpooling_data:
+  postgres_data:
+
+networks:
+  internal:
+    driver: bridge

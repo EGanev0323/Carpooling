@@ -1,0 +1,85 @@
+:root {
+  --ink: #0E1116;
+  --asphalt: #1B1F26;
+  --lane: #F5F1E8;
+  --mark: #F2C641;
+  --route: #3F7CAC;
+  --warn: #D95D39;
+  --muted: #6B7280;
+  --rule-dark: #2A2F38;
+  --rule-light: #E5E1D8;
+
+  --fs-display-xl: 4.5rem;
+  --fs-display-l: 3.0rem;
+  --fs-h1: 2.25rem;
+  --fs-h2: 1.5rem;
+  --fs-h3: 1.25rem;
+  --fs-body: 1.0rem;
+  --fs-small: 0.875rem;
+  --fs-caption: 0.75rem;
+
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+}
+
+[data-theme="dark"] {
+  --bg: var(--asphalt);
+  --text: var(--lane);
+  --rule: var(--rule-dark);
+}
+
+[data-theme="light"] {
+  --bg: var(--lane);
+  --text: var(--ink);
+  --rule: var(--rule-light);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--route);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* PrimeVue fluid helpers */
+.w-full {
+  width: 100% !important;
+}
+
+.p-inputtext.w-full,
+.p-password.w-full .p-inputtext,
+.p-select.w-full,
+.p-datepicker.w-full,
+.p-inputnumber.w-full .p-inputtext,
+.p-textarea.w-full {
+  width: 100% !important;
+}

@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "rides": "Rides",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile",
+    "myTrips": "My trips",
+    "myBookings": "My bookings",
+    "myCars": "My cars",
+    "publishTrip": "Publish ride",
+    "searchTrip": "Search ride"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "registerTitle": "Create account",
+    "email": "Email",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "phone": "Phone",
+    "username": "Username",
+    "isDriver": "I want to offer rides (driver)",
+    "loginButton": "Login",
+    "registerButton": "Register",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "verifyEmailTitle": "Check your email",
+    "verifyEmailMessage": "We have sent a confirmation link to your email address. Please check your inbox.",
+    "errors": {
+      "requiredFields": "Please fill in all required fields",
+      "invalidCredentials": "Invalid email or password",
+      "emailTaken": "This email is already registered",
+      "tooManyAttempts": "Too many attempts. Try again later.",
+      "passwordMinLength": "Password must be at least 12 characters",
+      "phonePattern": "Invalid phone format (e.g. +359888123456 or 0888123456)",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "trips": {
+    "searchTitle": "All rides",
+    "noResults": "No rides found for these criteria",
+    "found": "found",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "minSeats": "Min. seats",
+    "search": "Search",
+    "pricePerSeat": "BGN/seat",
+    "freeSeats": "free seats",
+    "filters": "Filters",
+    "priceRange": "Price per seat (BGN)",
+    "smokingAllowed": "Smoking allowed",
+    "petsAllowed": "Pets allowed",
+    "soon": "Coming soon..."
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "notFound": "Not found"
+  },
+  "home": {
+    "heroTitle": "Shared ride",
+    "heroSubtitle": "Travel smart, save money and protect the environment. Connect with drivers and passengers on your route.",
+    "howItWorksTitle": "How it works?",
+    "howItWorksSubtitle": "Three easy steps to your ride",
+    "step1Title": "Search",
+    "step1Desc": "Enter origin and destination city, pick a date and find a suitable ride.",
+    "step2Title": "Book",
+    "step2Desc": "Request seats and wait for driver confirmation.",
+    "step3Title": "Ride",
+    "step3Desc": "Board and enjoy the trip. Rate the driver after arrival.",
+    "ctaTitle": "Offering rides?",
+    "ctaDesc": "Register as a driver and publish your trips.",
+    "ctaRegister": "Register",
+    "ctaBrowse": "Browse rides"
+  }
+}

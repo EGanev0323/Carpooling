@@ -1,33 +1,35 @@
-<script setup>
-import './style.css'
-import AppNavbar from './components/AppNavbar.vue'
-import AppFooter from './components/AppFooter.vue'
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import AppHeader from '@/shared/components/AppHeader.vue'
+
+onMounted(() => {
+  document.documentElement.setAttribute('data-theme', 'dark')
+})
 </script>
 
 <template>
   <div class="app-wrapper">
-    <AppNavbar />
-    <main class="app-main">
+    <AppHeader />
+    <main class="main-content">
       <RouterView />
     </main>
-    <AppFooter />
     <Toast position="top-right" />
     <ConfirmDialog />
   </div>
 </template>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
 .app-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.app-main {
+.main-content {
   flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: var(--spacing-4);
 }
 </style>

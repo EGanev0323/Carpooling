@@ -1,23 +1,43 @@
-### AL ###
-#Template for AL projects for Dynamics 365 Business Central
-#launch.json folder
+# Secrets — NEVER commit
+.env
+*.env.local
+
+# Maven
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+!backend/.mvn/wrapper/maven-wrapper.properties
+
+# Frontend build
+frontend/dist/
+frontend/.vite/
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# IDE
+.idea/
+*.iml
 .vscode/
-#Cache folder
-.alcache/
-#Symbols folder
-.alpackages/
-#Snapshots folder
-.snapshots/
-#Testing Output folder
-.output/
-#Extension App-file
-*.app
-#Rapid Application Development File
-rad.json
-#Translation Base-file
-*.g.xlf
-#License-files
-*.bclicense
-*.flf
-#Test results file
-TestResults.xml
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker
+nginx/certs/
+
+# Java
+*.class
+*.jar
+!backend/Dockerfile
+
+# Coverage
+backend/target/site/
+frontend/coverage/

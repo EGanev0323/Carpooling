@@ -8,11 +8,11 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.2</version>
+        <version>3.5.3</version>
         <relativePath/>
     </parent>
 
-    <groupId>com.carpooling</groupId>
+    <groupId>bg.tu_sofia.carpooling</groupId>
     <artifactId>carpooling-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>carpooling-backend</name>
@@ -23,6 +23,10 @@
         <lombok.version>1.18.38</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <java-jwt.version>4.4.0</java-jwt.version>
+        <bucket4j.version>8.10.1</bucket4j.version>
+        <springdoc.version>2.8.9</springdoc.version>
+        <testcontainers.version>1.20.4</testcontainers.version>
     </properties>
 
     <dependencies>
@@ -30,6 +34,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- WebSocket + STOMP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
         <!-- Data JPA -->
@@ -56,6 +66,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- Mail (email verification) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
         <!-- Flyway -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -71,6 +87,37 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- JWT -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java-jwt.version}</version>
+        </dependency>
+
+        <!-- Rate limiting -->
+        <dependency>
+            <groupId>com.bucket4j</groupId>
+            <artifactId>bucket4j-core</artifactId>
+            <version>${bucket4j.version}</version>
+        </dependency>
+
+        <!-- Caffeine cache -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
+        <!-- OpenAPI / Swagger -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc.version}</version>
         </dependency>
 
         <!-- Lombok -->
@@ -98,9 +145,21 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Testcontainers -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
