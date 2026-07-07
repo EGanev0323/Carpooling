@@ -1,0 +1,23 @@
+CREATE TABLE trips (
+    id                  BIGSERIAL    PRIMARY KEY,
+    driver_id           BIGINT       NOT NULL REFERENCES users(id),
+    car_id              BIGINT       NOT NULL REFERENCES cars(id),
+    origin_city         VARCHAR(100) NOT NULL,
+    origin_address      VARCHAR(255),
+    destination_city    VARCHAR(100) NOT NULL,
+    destination_address VARCHAR(255),
+    departure_time      TIMESTAMPTZ  NOT NULL,
+    estimated_arrival   TIMESTAMPTZ,
+    price_per_seat      NUMERIC(8,2) NOT NULL,
+    total_seats         SMALLINT     NOT NULL,
+    available_seats     SMALLINT     NOT NULL,
+    status              VARCHAR(20)  NOT NULL DEFAULT 'SCHEDULED',
+    description         TEXT,
+    smoking_allowed     BOOLEAN      NOT NULL DEFAULT FALSE,
+    pets_allowed        BOOLEAN      NOT NULL DEFAULT FALSE,
+    created_at          TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    updated_at          TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
+    CONSTRAINT chk_trips_status CHECK (status IN ('SCHEDULED', 'ACTIVE', 'COMPLETED', 'CANCELLED')),
+    CONSTRAINT chk_trips_seats  CHECK (available_seats >= 0 AND available_seats <= total_seats),
+    CONSTRAINT chk_trips_price  CHECK (price_per_seat >= 0)
+);

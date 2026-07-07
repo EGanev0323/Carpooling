@@ -1,0 +1,13 @@
+ALTER TABLE cars
+    ALTER COLUMN year        TYPE INTEGER,
+    ALTER COLUMN total_seats TYPE INTEGER;
+
+ALTER TABLE trips
+    ALTER COLUMN total_seats     TYPE INTEGER,
+    ALTER COLUMN available_seats TYPE INTEGER;
+
+ALTER TABLE bookings
+    ALTER COLUMN seats_booked TYPE INTEGER;
+
+ALTER TABLE ratings
+    ALTER COLUMN score TYPE INTEGER;

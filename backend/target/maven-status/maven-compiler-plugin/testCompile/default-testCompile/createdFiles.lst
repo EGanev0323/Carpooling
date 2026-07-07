@@ -1,0 +1,5 @@
+com\carpooling\CarpoolingApplicationTests.class
+com\carpooling\controller\SecurityConfigTest.class
+com\carpooling\service\AuthServiceTest.class
+com\carpooling\service\BookingServiceTest.class
+com\carpooling\controller\AuthControllerTest.class
